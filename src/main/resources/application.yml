@@ -2,5 +2,20 @@ spring:
   application:
     name: mataycode-website
 
+  datasource:
+      url: jdbc:postgresql://localhost:5432/customer
+      username: mataycode
+      password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
 server:
   port: 8080
+#  CONSIDER TURNING OFF ERROR MESSAGES TO PREVENT FROM LEAKING INFORMATION
+  error:
+    include-message: always
