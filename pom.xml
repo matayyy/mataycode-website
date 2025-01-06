@@ -13,13 +13,13 @@
     <artifactId>mataycode-website</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mataycode-website</name>
-    <description>mataycode-website</description>
 
     <properties>
         <java.version>17</java.version>
     </properties>
 
     <dependencies>
+<!--        SPRING WEB - FOR CREATING API-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -30,15 +30,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+<!--        POSTGRES DRIVER FOR DATABASE/DATASOURCE-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+<!--        JPA-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+<!--        FLYWAY - ADDED FOR CREATING MIGRATION FOR JDBC IMPLEMENTATION-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -52,12 +58,14 @@
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
 
+<!--        FAKER - ADDED FOR CREATING FAKE USERS-->
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
 
+<!--        TESTCONTAINERS - ADDED FOR TESTING DAO LAYER-->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -73,13 +81,100 @@
             <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
+
+<!--        REACTIVE-WEB - ADDED FOR INTEGRATION TEST-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+<!--            The plugin enables building and running Spring-Boot applications,-->
+<!--            creating JAR/WAR files, and integrating seamlessly with the Spring ecosystem.-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+<!--                Added for execute failsafe plugin.-->
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+<!--                        Configuration to run tests at different port.-->
+<!--                        Port are provided by 'build-helper-maven-plugin'-->
+                        <configuration>
+                            <arguments>
+                                <argument>--server.port=${tomcat.http.port}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+<!--            This plugin is used to run unit test during the build "mvn test" process. Runs every file ended with "test"-->
+<!--            Changed configuration to not running integration test.-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+<!--            Plugin designed to run integration tests separately from unit tests,-->
+<!--            ensuring proper execution during the integration testing phase of the build lifecycle.-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <includes>
+<!--                        By default, looking for classes ended with IT-->
+                        <include>**/*IntegrationTest.java</include>
+                        <include>**/*IT.java</include>
+                    </includes>
+<!--                    Configuration to run tests at different port.-->
+<!--                    Port are provided by 'build-helper-maven-plugin'-->
+                    <systemPropertyVariables>
+                        <test.server.port>${tomcat.http.port}</test.server.port>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
+<!--            Plugin responsible for using random port while testing application.-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>reserve-tomcat-port</id>
+                        <goals>
+                            <goal>reserve-network-port</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <portNames>
+                                <portName>tomcat.http.port</portName>
+                            </portNames>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
