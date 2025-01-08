@@ -15,6 +15,19 @@ services:
       - postgres
     restart: unless-stopped
 
+  mataycode-api:
+    container_name: mataycode-api
+    image: matayyy/mataycode-website
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/customer
+    ports:
+        - "8088:8080"
+    networks:
+        - postgres
+    depends_on:
+        - postgres
+    restart: unless-stopped
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
