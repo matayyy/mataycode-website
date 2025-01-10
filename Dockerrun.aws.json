@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "mataycode-website",
-      "image": "matayyy/mataycode-website:latest",
+      "image": "matayyy/mataycode-website:10.01.2025.16.59.31",
       "essential": true,
       "memory": 512,
       "portMappings": [
