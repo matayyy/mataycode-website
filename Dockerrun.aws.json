@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "mataycode-website",
-      "image": "matayyy/mataycode-website",
+      "image": "matayyy/mataycode-website:latest",
       "essential": true,
       "memory": 512,
       "portMappings": [
@@ -15,7 +15,7 @@
       "environment": [
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://TO_DO_DATABASE_URL:5432/customer"
+          "value": "jdbc:postgresql://awseb-e-2yx5iw9muc-stack-awsebrdsdatabase-e54czkdszcds.cbywrgbkjz1t.eu-central-1.rds.amazonaws.com:5432/customer"
         }
       ]
     }
