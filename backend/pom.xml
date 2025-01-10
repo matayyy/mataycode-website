@@ -19,6 +19,8 @@
         <docker.username>matayyy</docker.username>
         <docker.image.name>mataycode-website</docker.image.name>
         <maven.build.timestamp.format>dd.MM.yyyy-HH.mm.ss</maven.build.timestamp.format>
+<!--        TAG CREATED AT GITHUB-ACTIONS WORKFLOW-->
+        <docker.image.tag/>
     </properties>
 
     <dependencies>
@@ -185,14 +187,15 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.4.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
+<!--                FOR JIB:BUILD BINDING WITH MVN LIFECYCLE-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>build</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
                 <configuration>
                     <from>
                         <image>eclipse-temurin:17</image>
@@ -208,7 +211,8 @@
                         </platforms>
                     </from>
                     <to>
-                        <image>docker.io/${docker.username}/${docker.image.name}:${maven.build.timestamp}</image>
+<!--                        <image>docker.io/${docker.username}/${docker.image.name}:${maven.build.timestamp}</image>-->
+                        <image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
                         <tags>
                             <tag>latest</tag>
                         </tags>
