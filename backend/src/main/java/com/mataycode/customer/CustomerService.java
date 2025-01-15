@@ -38,8 +38,8 @@ public class CustomerService {
                 new Customer(
                         customerRegistrationRequest.name(),
                         customerRegistrationRequest.email(),
-                        customerRegistrationRequest.age()
-                ));
+                        customerRegistrationRequest.age(),
+                        customerRegistrationRequest.gender()));
     }
 
     public void deleteCustomerById(Integer customerId) {
@@ -74,6 +74,12 @@ public class CustomerService {
         //check field age
         if(!customerToUpdate.getAge().equals(updateRequest.age()) && updateRequest.age() != null) {
             customerToUpdate.setAge(updateRequest.age());
+            changes = true;
+        }
+
+        //check field gender
+        if(!customerToUpdate.getGender().equals(updateRequest.gender()) && updateRequest.gender() != null) {
+            customerToUpdate.setGender(updateRequest.gender());
             changes = true;
         }
 
