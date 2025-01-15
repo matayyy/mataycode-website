@@ -1,6 +1,6 @@
 'use client'
 
-import logo from '../assets/jellyfish-icon.png'
+import logo from '../../assets/jellyfish-icon.png'
 
 import {
     Image,

@@ -19,3 +19,7 @@ server:
 #  CONSIDER TURNING OFF ERROR MESSAGES TO PREVENT FROM LEAKING INFORMATION
   error:
     include-message: always
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
