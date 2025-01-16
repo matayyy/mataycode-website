@@ -5,6 +5,7 @@ import com.github.javafaker.Name;
 import com.mataycode.customer.Customer;
 import com.mataycode.customer.CustomerRegistrationRequest;
 import com.mataycode.customer.CustomerUpdateRequest;
+import com.mataycode.customer.Gender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +40,9 @@ public class CustomerIntegrationTest {
         String email = fakerName.lastName() + "-" + UUID.randomUUID() + "@journeyTest.com";
         int age = RANDOM.nextInt(1, 100);
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
 
         // send a post request
         webClient.post()
@@ -62,7 +65,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         //make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, age);
+        Customer expectedCustomer = new Customer(name, email, age, gender);
 
         assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
                 .contains(expectedCustomer);
@@ -96,7 +99,9 @@ public class CustomerIntegrationTest {
         String email = fakerName.lastName() + "-" + UUID.randomUUID() + "@journeyTest.com";
         int age = RANDOM.nextInt(1, 100);
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
 
         // send a post request
         webClient.post()
@@ -151,7 +156,9 @@ public class CustomerIntegrationTest {
         String email = fakerName.lastName() + "-" + UUID.randomUUID() + "@journeyTest.com";
         int age = RANDOM.nextInt(1, 100);
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age);
+        Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
 
         // send a post request
         webClient.post()
@@ -181,7 +188,7 @@ public class CustomerIntegrationTest {
 
         //update customer
         String newEmail = fakerName.lastName() + "-" + UUID.randomUUID() + "@journeyTest.com";
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("updatedName", newEmail, 23);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("updatedNameIT", newEmail, 23, gender);
 
         webClient.put()
                 .uri(CUSTOMER_URI + "/" + id)
@@ -202,7 +209,7 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        Customer expected = new Customer(id, updateRequest.name(), updateRequest.email(), updateRequest.age());
+        Customer expected = new Customer(id, updateRequest.name(), updateRequest.email(), updateRequest.age(), updateRequest.gender());
 
         assertThat(updatedCustomer).isEqualTo(expected);
     }

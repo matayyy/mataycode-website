@@ -2,8 +2,6 @@ package com.mataycode.customer;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.ResultSet;
@@ -27,12 +25,13 @@ class CustomerRowMapperTest {
         when(resultSet.getString("name")).thenReturn("John");
         when(resultSet.getString("email")).thenReturn("john@gmail.com");
         when(resultSet.getInt("age")).thenReturn(21);
+        when((resultSet.getString("gender"))).thenReturn("MALE");
 
         //WHEN
         Customer actual = customerRowMapper.mapRow(resultSet, 1);
 
         //THEN
-        Customer expected = new Customer(1, "John", "john@gmail.com", 21);
+        Customer expected = new Customer(1, "John", "john@gmail.com", 21, Gender.MALE);
         assertThat(actual).isEqualTo(expected);
     }
 }

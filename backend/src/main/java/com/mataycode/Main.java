@@ -3,13 +3,12 @@ package com.mataycode;
 import com.github.javafaker.Faker;
 import com.mataycode.customer.Customer;
 import com.mataycode.customer.CustomerRepository;
+import com.mataycode.customer.Gender;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @SpringBootApplication
 @RestController
@@ -26,11 +25,13 @@ public class Main {
             var name = faker.name();
             String firstName = name.firstName();
             String lastName = name.lastName();
+            int age = faker.number().numberBetween(18, 80);
+            Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
             Customer customer = new Customer(
                     firstName + " " + lastName,
                     firstName.toLowerCase() + "." + lastName.toLowerCase() + "@dev.com",
-                    faker.number().numberBetween(18,80));
+                    age, gender);
             customerRepository.save(customer);
         };
     }

@@ -106,7 +106,7 @@ const SidebarContent = ({onClose, ...rest}) => {
 
 const NavItem = ({icon, children, ...rest}) => {
     return (
-        <Link href="frontend/react/src/components/shared#" style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+        // <Link href="frontend/react/src/components/shared#" style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
             <Flex
                 align="center"
                 p="4"
@@ -115,7 +115,7 @@ const NavItem = ({icon, children, ...rest}) => {
                 role="group"
                 cursor="pointer"
                 _hover={{
-                    bg: 'cyan.400',
+                    bg: 'teal',
                     color: 'white',
                 }}
                 {...rest}>
@@ -131,7 +131,7 @@ const NavItem = ({icon, children, ...rest}) => {
                 )}
                 {children}
             </Flex>
-        </Link>
+        // </Link>
     );
 };
 

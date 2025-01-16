@@ -8,14 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CustomerServiceTest {
@@ -49,7 +47,7 @@ class CustomerServiceTest {
     void getCustomerById() {
         //GIVEN
         int id = 10;
-        Customer customer = new Customer(id, "Luna", "luna@dev.com", 23);
+        Customer customer = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         //WHEN
@@ -79,7 +77,7 @@ class CustomerServiceTest {
         when(customerDao.existPersonWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Luna", email, 23
+                "Luna", email, 23, Gender.FEMALE
         );
 
         //WHEN
@@ -103,7 +101,7 @@ class CustomerServiceTest {
         when(customerDao.existPersonWithEmail(email)).thenReturn(true);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Luna", email, 23
+                "Luna", email, 23, Gender.FEMALE
         );
 
         //WHEN
@@ -147,10 +145,10 @@ class CustomerServiceTest {
     void canUpdateAllFieldsCustomer() {
         //GIVEN
         int id = 10;
-        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23);
+        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customerToUpdate));
 
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Sola", "sola@dev.com", 24);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Sola", "sola@dev.com", 24, Gender.FEMALE);
         when(customerDao.existPersonWithEmail(updateRequest.email())).thenReturn(false);
 
         //WHEN
@@ -165,14 +163,15 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(updateRequest.name());
         assertThat(capturedCustomer.getEmail()).isEqualTo(updateRequest.email());
         assertThat(capturedCustomer.getAge()).isEqualTo(updateRequest.age());
+        assertThat(capturedCustomer.getGender()).isEqualTo(updateRequest.gender());
     }
 
     @Test
     void canUpdateCustomerName() {
         //GIVEN
         int id = 10;
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Sola", null, null);
-        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Sola", null, null, null);
+        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customerToUpdate));
 
@@ -188,14 +187,15 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(updateRequest.name());
         assertThat(capturedCustomer.getEmail()).isEqualTo(customerToUpdate.getEmail());
         assertThat(capturedCustomer.getAge()).isEqualTo(customerToUpdate.getAge());
+        assertThat(capturedCustomer.getGender()).isEqualTo(customerToUpdate.getGender());
     }
 
     @Test
     void canUpdateCustomerEmail() {
         //GIVEN
         int id = 10;
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, "sola@dev.com", null);
-        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, "sola@dev.com", null, null);
+        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customerToUpdate));
         when(customerDao.existPersonWithEmail(updateRequest.email())).thenReturn(false);
@@ -218,8 +218,8 @@ class CustomerServiceTest {
     void canUpdateCustomerAge() {
         //GIVEN
         int id = 10;
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, 24);
-        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, 24, null);
+        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customerToUpdate));
 
@@ -241,8 +241,8 @@ class CustomerServiceTest {
     void willThrowWhenUpdateCustomerEmailWhichIsTaken() {
         //GIVEN
         int id = 10;
-        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, "sola@dev.com", null);
-        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23);
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, "sola@dev.com", null, null);
+        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customerToUpdate));
         when(customerDao.existPersonWithEmail(updateRequest.email())).thenReturn(true);
@@ -260,9 +260,9 @@ class CustomerServiceTest {
     void willThrowWhenNotchingToUpdateCustomer() {
         //GIVEN
         int id = 10;
-        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23);
+        Customer customerToUpdate = new Customer(id, "Luna", "luna@dev.com", 23, Gender.MALE);
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                customerToUpdate.getName(), customerToUpdate.getEmail(), customerToUpdate.getAge());
+                customerToUpdate.getName(), customerToUpdate.getEmail(), customerToUpdate.getAge(), customerToUpdate.getGender());
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customerToUpdate));
         when(customerDao.existPersonWithEmail(updateRequest.email())).thenReturn(false);
