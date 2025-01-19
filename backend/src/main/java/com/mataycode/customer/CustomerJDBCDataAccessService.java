@@ -107,5 +107,11 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
             int result = jdbcTemplate.update(sql, update.getEmail(), update.getId());
             System.out.println("update customer email result = " + result);
         }
+
+        if (update.getGender() != null) {
+            String sql = "UPDATE customer SET gender = ? WHERE id = ?";
+            int result = jdbcTemplate.update(sql, update.getGender().name(), update.getId());
+            System.out.println("update customer gender result = " + result);
+        }
     }
 }
