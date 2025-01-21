@@ -99,7 +99,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"Deployment and commit completed - ${{ variables.EB_APPLICATION_LINK }}"}' 
+          --data '{"text":"Deployment and commit completed - ${{ vars.EB_APPLICATION_LINK }}"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send Slack Message
