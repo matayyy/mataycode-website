@@ -47,7 +47,7 @@ jobs:
           REPO=mataycode-react \
           TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \
           ../../.ci/build-publish.sh . \
-            --build-arg api_base_url=${{ variables.EB_APPLICATION_LINK }}:8080
+            --build-arg api_base_url=${{ vars.EB_APPLICATION_LINK }}:8080
 
       - name: Send Slack Message
         run: >
