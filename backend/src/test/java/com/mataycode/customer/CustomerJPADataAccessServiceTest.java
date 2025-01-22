@@ -51,7 +51,7 @@ class CustomerJPADataAccessServiceTest {
     void insertCustomer() {
         //GIVEN
         Customer customer = new Customer(
-                1, "Luna", "luna@dev.com", 23,
+                1, "Luna", "luna@dev.com", "password", 23,
                 Gender.MALE);
 
         //WHEN
@@ -101,7 +101,7 @@ class CustomerJPADataAccessServiceTest {
     void updateCustomer() {
         //GIVEN
         Customer customer = new Customer(
-                1, "Luna", "luna@dev.com", 23,
+                1, "Luna", "luna@dev.com", "password", 23,
                 Gender.MALE);
 
         //WHEN

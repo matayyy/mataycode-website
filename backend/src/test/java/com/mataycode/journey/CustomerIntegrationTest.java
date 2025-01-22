@@ -42,7 +42,7 @@ public class CustomerIntegrationTest {
 
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, "password", age, gender);
 
         // send a post request
         webClient.post()
@@ -65,7 +65,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         //make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, age, gender);
+        Customer expectedCustomer = new Customer(name, email, "password", age, gender);
 
         assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
                 .contains(expectedCustomer);
@@ -101,7 +101,7 @@ public class CustomerIntegrationTest {
 
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, "password", age, gender);
 
         // send a post request
         webClient.post()
@@ -158,7 +158,7 @@ public class CustomerIntegrationTest {
 
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
 
-        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, age, gender);
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, "password", age, gender);
 
         // send a post request
         webClient.post()
@@ -209,7 +209,7 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        Customer expected = new Customer(id, updateRequest.name(), updateRequest.email(), updateRequest.age(), updateRequest.gender());
+        Customer expected = new Customer(id, updateRequest.name(), updateRequest.email(), "password", updateRequest.age(), updateRequest.gender());
 
         assertThat(updatedCustomer).isEqualTo(expected);
     }
