@@ -2,14 +2,12 @@ package com.mataycode.journey;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
-import com.mataycode.customer.Customer;
-import com.mataycode.customer.CustomerRegistrationRequest;
-import com.mataycode.customer.CustomerUpdateRequest;
-import com.mataycode.customer.Gender;
+import com.mataycode.customer.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -44,47 +42,52 @@ public class CustomerIntegrationTest {
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(name, email, "password", age, gender);
 
-        // send a post request
-        webClient.post()
+        // send a post request and get authorization token
+        String jwtToken = webClient.post()
                 .uri(CUSTOMER_URI)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(request), CustomerRegistrationRequest.class)
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+                .returnResult(Void.class)
+                .getResponseHeaders()
+                .get(HttpHeaders.AUTHORIZATION)
+                .get(0);
 
         //get all customers
-        List<Customer> allCustomers = webClient.get()
+        List<CustomerDTO> allCustomers = webClient.get()
                 .uri(CUSTOMER_URI)
                 .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(new ParameterizedTypeReference<Customer>() {
+                .expectBodyList(new ParameterizedTypeReference<CustomerDTO>() {
                 })
                 .returnResult()
                 .getResponseBody();
 
-        //make sure that customer is present
-        Customer expectedCustomer = new Customer(name, email, "password", age, gender);
-
-        assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
-                .contains(expectedCustomer);
-
         var id = allCustomers.stream()
-                .filter(customer -> customer.getEmail().equals(email))
-                .map(Customer::getId)
+                .filter(customer -> customer.email().equals(email))
+                .map(CustomerDTO::id)
                 .findFirst()
                 .orElseThrow();
 
-        expectedCustomer.setId(id);
+        //make sure that customer is present
+        CustomerDTO expectedCustomer = new CustomerDTO(
+                id, name, email, gender, age, List.of("ROLE_USER"), email
+        );
+
+        assertThat(allCustomers).contains(expectedCustomer);
 
         //get customer by id
         webClient.get()
                 .uri(CUSTOMER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(new ParameterizedTypeReference<Customer>() {
+                .expectBody(new ParameterizedTypeReference<CustomerDTO>() {
                 })
                 .isEqualTo(expectedCustomer);
     }
