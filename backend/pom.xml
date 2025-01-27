@@ -21,6 +21,7 @@
         <maven.build.timestamp.format>dd.MM.yyyy-HH.mm.ss</maven.build.timestamp.format>
 <!--        TAG CREATED AT GITHUB-ACTIONS WORKFLOW-->
         <docker.image.tag/>
+        <jsonwebtoken.version>0.12.6</jsonwebtoken.version>
     </properties>
 
     <dependencies>
@@ -97,6 +98,37 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+<!--        SPRING SECURITY-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+<!--        JSON-WEB-TOKEN-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jsonwebtoken.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jsonwebtoken.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jsonwebtoken.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

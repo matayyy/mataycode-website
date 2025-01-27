@@ -29,7 +29,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID(),
-                20,
+                "password", 20,
                 Gender.MALE);
         underTest.insertCustomer(customer);
         //WHEN
@@ -46,7 +46,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
-                20,
+                "password", 20,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
@@ -86,7 +86,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                FAKER.name().fullName(), email, 23,
+                FAKER.name().fullName(), email, "password", 23,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
@@ -114,7 +114,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                "Sola", email, 23, Gender.MALE);
+                "Sola", email, "password", 23, Gender.MALE);
         underTest.insertCustomer(customer);
 
         int id = underTest.selectAllCustomers().stream()
@@ -147,7 +147,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                "Pola", email, 23,
+                "Pola", email, "password", 23,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
@@ -169,7 +169,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                FAKER.name().fullName(), email, 23,
+                FAKER.name().fullName(), email, "password", 23,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
@@ -204,7 +204,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                FAKER.name().fullName(), email, 23,
+                FAKER.name().fullName(), email, "password", 23,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
@@ -239,7 +239,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                FAKER.name().fullName(), email, 23,
+                FAKER.name().fullName(), email, "password", 23,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
@@ -274,7 +274,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                FAKER.name().fullName(), email, 23, Gender.MALE);
+                FAKER.name().fullName(), email, "password", 23, Gender.MALE);
         underTest.insertCustomer(customer);
 
         int id = underTest.selectAllCustomers().stream()
@@ -312,7 +312,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         //GIVEN
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
         Customer customer = new Customer(
-                FAKER.name().fullName(), email, 23,
+                FAKER.name().fullName(), email, "password", 23,
                 Gender.MALE);
         underTest.insertCustomer(customer);
 
