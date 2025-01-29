@@ -90,6 +90,7 @@ const Login = () => {
                     <Image src={logo} boxSize={"200px"} alt={"Mataycode Logo"}/>
                     <Heading fontSize={'2xl'} mb={15}>Sign in to your account</Heading>
                     <LoginForm/>
+                    <Link color={"blue.500"} href={"/signup"}>Dont have an account? Signup now.</Link>
                 </Stack>
             </Flex>
             <Flex flex={1} padding={10} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}
