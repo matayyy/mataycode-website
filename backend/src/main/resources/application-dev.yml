@@ -3,9 +3,9 @@ spring:
     name: mataycode-website
 
   datasource:
-      url: jdbc:postgresql://localhost:5432/customer
-      username: mataycode
-      password: password
+    url: jdbc:postgresql://awseb-e-2yx5iw9muc-stack-awsebrdsdatabase-e54czkdszcds.cbywrgbkjz1t.eu-central-1.rds.amazonaws.com:5432/ebdb
+    username: mataycode
+    password: password
   jpa:
     hibernate:
       ddl-auto: validate
@@ -16,7 +16,7 @@ spring:
 
 server:
   port: 8080
-#  CONSIDER TURNING OFF ERROR MESSAGES TO PREVENT FROM LEAKING INFORMATION
+  #  CONSIDER TURNING OFF ERROR MESSAGES TO PREVENT FROM LEAKING INFORMATION
   error:
     include-message: always
 
