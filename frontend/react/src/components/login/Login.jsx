@@ -56,7 +56,7 @@ const LoginForm = () => {
                 setSubmitting(true)
                 login(values).then(res => {
                     //navigate to dashboard
-                    navigate("/dashboard")
+                    navigate("/dashboard/customers")
                     console.log("Successfully logged in")
                 }).catch(err => {
                     errorNotification(
