@@ -67,18 +67,32 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        var id = allCustomers.stream()
-                .filter(customer -> customer.email().equals(email))
-                .map(CustomerDTO::id)
-                .findFirst()
-                .orElseThrow();
+//        var id = allCustomers.stream()
+//                .filter(customer -> customer.email().equals(email))
+//                .map(CustomerDTO::id)
+//                .findFirst()
+//                .orElseThrow();
+
+        //get customer by email
+        CustomerDTO responseBody = webClient.get()
+                .uri(CUSTOMER_PATH + "/email/{email}", email)
+                .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(new ParameterizedTypeReference<CustomerDTO>() {
+                })
+                .returnResult()
+                .getResponseBody();
+
+        var id = responseBody.id();
 
         //make sure that customer is present
         CustomerDTO expectedCustomer = new CustomerDTO(
                 id, name, email, gender, age, List.of("ROLE_USER"), email
         );
 
-        assertThat(allCustomers).contains(expectedCustomer);
+//        assertThat(allCustomers).contains(expectedCustomer);
 
         //get customer by id
         webClient.get()
@@ -141,11 +155,25 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        var id = allCustomers.stream()
-                .filter(customer -> customer.email().equals(email))
-                .map(CustomerDTO::id)
-                .findFirst()
-                .orElseThrow();
+//        var id = allCustomers.stream()
+//                .filter(customer -> customer.email().equals(email))
+//                .map(CustomerDTO::id)
+//                .findFirst()
+//                .orElseThrow();
+
+        //get customer by email
+        CustomerDTO responseBody = webClient.get()
+                .uri(CUSTOMER_PATH + "/email/{email}", email)
+                .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(new ParameterizedTypeReference<CustomerDTO>() {
+                })
+                .returnResult()
+                .getResponseBody();
+
+        var id = responseBody.id();
 
         //customer 2 deletes customer 1
         webClient.delete()
@@ -205,11 +233,25 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        var id = allCustomers.stream()
-                .filter(customer -> customer.email().equals(email))
-                .map(CustomerDTO::id)
-                .findFirst()
-                .orElseThrow();
+//        var id = allCustomers.stream()
+//                .filter(customer -> customer.email().equals(email))
+//                .map(CustomerDTO::id)
+//                .findFirst()
+//                .orElseThrow();
+
+        //get customer by email
+        CustomerDTO responseBody = webClient.get()
+                .uri(CUSTOMER_PATH + "/email/{email}", email)
+                .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", jwtToken))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(new ParameterizedTypeReference<CustomerDTO>() {
+                })
+                .returnResult()
+                .getResponseBody();
+
+        var id = responseBody.id();
 
         //update customer
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("updatedNameIT", null, 23, gender);

@@ -105,4 +105,12 @@ public class CustomerService {
             throw new RequestValidationException("No data changes found");
         }
     }
+
+    public CustomerDTO getCustomerByEmail(String email) {
+        return customerDao.selectUserByEmail(email)
+                .map(customerDTOMapper)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Customer with email [%s] not found".formatted(email))
+                );
+    }
 }
