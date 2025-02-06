@@ -31,3 +31,9 @@ management:
     web:
       exposure:
         include: "health, info"
+
+aws:
+  region: "eu-central-1"
+  s3:
+    buckets:
+      customer: mataycode-website-customer
