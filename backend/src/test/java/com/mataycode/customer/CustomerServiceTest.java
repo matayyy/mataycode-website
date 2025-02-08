@@ -3,6 +3,8 @@ package com.mataycode.customer;
 import com.mataycode.exception.DuplicateResourceException;
 import com.mataycode.exception.RequestValidationException;
 import com.mataycode.exception.ResourceNotFoundException;
+import com.mataycode.s3.S3Buckets;
+import com.mataycode.s3.S3Service;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,11 +28,15 @@ class CustomerServiceTest {
     private CustomerDTOMapper customerDTOMapper = new CustomerDTOMapper();
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private S3Service s3Service;
+    @Mock
+    private S3Buckets s3Buckets;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        underTest = new CustomerService(customerDao, customerDTOMapper, passwordEncoder);
+        underTest = new CustomerService(customerDao, customerDTOMapper, passwordEncoder, s3Service, s3Buckets);
     }
 
     @AfterEach

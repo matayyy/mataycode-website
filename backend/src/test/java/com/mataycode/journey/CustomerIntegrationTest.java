@@ -89,7 +89,7 @@ public class CustomerIntegrationTest {
 
         //make sure that customer is present
         CustomerDTO expectedCustomer = new CustomerDTO(
-                id, name, email, gender, age, List.of("ROLE_USER"), email
+                id, name, email, gender, age, List.of("ROLE_USER"), email, null
         );
 
 //        assertThat(allCustomers).contains(expectedCustomer);
@@ -277,7 +277,7 @@ public class CustomerIntegrationTest {
                 .returnResult()
                 .getResponseBody();
 
-        CustomerDTO expected = new CustomerDTO(id, updateRequest.name(), email, updateRequest.gender(), updateRequest.age(), List.of("ROLE_USER"), email);
+        CustomerDTO expected = new CustomerDTO(id, updateRequest.name(), email, updateRequest.gender(), updateRequest.age(), List.of("ROLE_USER"), email, null);
 
         assertThat(updatedCustomer).isEqualTo(expected);
     }
