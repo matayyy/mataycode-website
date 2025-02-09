@@ -5,6 +5,7 @@ import com.mataycode.exception.RequestValidationException;
 import com.mataycode.exception.ResourceNotFoundException;
 import com.mataycode.s3.S3Buckets;
 import com.mataycode.s3.S3Service;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -135,7 +136,7 @@ public class CustomerService {
         try {
             s3Service.putObject(s3Buckets.getCustomer(), "profile-images/%s/%s".formatted(customerId, profileImageId), file.getBytes());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to upload profile image", e);
         }
 
         //Store profileImageId to db
@@ -150,7 +151,7 @@ public class CustomerService {
                 );
 
         //check if  profileImageId is empty or null
-        if (customer.profileImageId().isBlank()) {
+        if (StringUtils.isBlank(customer.profileImageId())) {
             throw new ResourceNotFoundException("Profile image with id [%s] not found".formatted(customerId));
         }
 
