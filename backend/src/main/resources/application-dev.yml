@@ -1,36 +1,9 @@
-spring:
-  application:
-    name: mataycode-website
+aws:
+  s3:
+    mock: false
 
+spring:
   datasource:
     url: jdbc:postgresql://awseb-e-2yx5iw9muc-stack-awsebrdsdatabase-e54czkdszcds.cbywrgbkjz1t.eu-central-1.rds.amazonaws.com:5432/ebdb
     username: mataycode
     password: password
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        format_sql: true
-    show-sql: true
-
-server:
-  port: 8080
-  #  CONSIDER TURNING OFF ERROR MESSAGES TO PREVENT FROM LEAKING INFORMATION
-  error:
-    include-message: always
-
-cors:
-  allowed-origins: "*"
-  allowed-methods: "*"
-  allowed-headers: "*"
-  exposed-headers: "*"
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "health, info"
-
-aws:
-  region: "eu-central-1"
