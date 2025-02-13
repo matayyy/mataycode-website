@@ -4,6 +4,10 @@ aws:
 
 spring:
   datasource:
-    url: jdbc:postgresql://awseb-e-2yx5iw9muc-stack-awsebrdsdatabase-e54czkdszcds.cbywrgbkjz1t.eu-central-1.rds.amazonaws.com:5432/ebdb
-    username: mataycode
-    password: password
+#    url: jdbc:postgresql://awseb-e-2yx5iw9muc-stack-awsebrdsdatabase-e54czkdszcds.cbywrgbkjz1t.eu-central-1.rds.amazonaws.com:5432/ebdb
+#    username: mataycode
+#    password: password
+
+    url: jdbc-secretsmanager:postgresql://awseb-e-2yx5iw9muc-stack-awsebrdsdatabase-e54czkdszcds.cbywrgbkjz1t.eu-central-1.rds.amazonaws.com:5432/ebdb
+    username: dev/mataycode-website/postgres
+    driver-class-name: com.amazonaws.secretsmanager.sql.AWSSecretsManagerPostgreSQLDriver
